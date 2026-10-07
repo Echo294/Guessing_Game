@@ -1,0 +1,92 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class GuessingGame {
+
+    private int targetNumber;
+    private int attempts;
+
+    public GuessingGame() {
+        targetNumber = generateTargetNumber();
+        attempts = 0;
+    }
+
+    public int generateTargetNumber() {
+        Random random = new Random();
+
+        // Generates an odd number between 1 and 999
+        return random.nextInt(500) * 2 + 1;
+    }
+
+    public boolean isValidGuess(int guess) {
+        return guess >= 1 && guess <= 1000 && guess % 2 != 0;
+    }
+
+    public String checkGuess(int guess) {
+        attempts++;
+
+        if (!isValidGuess(guess)) {
+            return "Invalid guess. Please enter an odd integer between 1 and 1000.";
+        }
+
+        if (guess < targetNumber) {
+            return "Too low!";
+        } else if (guess > targetNumber) {
+            return "Too high!";
+        } else {
+            return "Correct!";
+        }
+    }
+
+    public boolean isCorrect(int guess) {
+        return guess == targetNumber;
+    }
+
+    public int getTargetNumber() {
+        return targetNumber;
+    }
+
+    public int getAttempts() {
+        return attempts;
+    }
+
+    public void setTargetNumber(int targetNumber) {
+        this.targetNumber = targetNumber;
+    }
+
+    public void startGame() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Guess an odd integer between 1 and 1000.");
+
+        boolean correct = false;
+
+        while (!correct) {
+            System.out.print("Enter your guess: ");
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.next();
+                continue;
+            }
+
+            int guess = scanner.nextInt();
+
+            String result = checkGuess(guess);
+            System.out.println(result);
+
+            if (isCorrect(guess) && isValidGuess(guess)) {
+                correct = true;
+                System.out.println("You guessed the number in "
+                        + attempts + " attempts!");
+            }
+        }
+
+        scanner.close();
+    }
+
+    public static void main(String[] args) {
+        GuessingGame game = new GuessingGame();
+        game.startGame();
+    }
+}
