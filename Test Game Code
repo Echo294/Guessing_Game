@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class TwoPlayerMovement : MonoBehaviour
+{
+    public Transform player1;
+    public Transform player2;
+
+    public float moveSpeed = 5f;
+
+    void Update()
+    {
+        MovePlayer1();
+        MovePlayer2();
+    }
+
+    void MovePlayer1()
+    {
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (Input.GetKey(KeyCode.W))
+            vertical = 1f;
+
+        if (Input.GetKey(KeyCode.S))
+            vertical = -1f;
+
+        if (Input.GetKey(KeyCode.A))
+            horizontal = -1f;
+
+        if (Input.GetKey(KeyCode.D))
+            horizontal = 1f;
+
+        Vector3 movement = new Vector3(horizontal, vertical, 0f);
+
+        player1.position += movement.normalized * moveSpeed * Time.deltaTime;
+    }
+
+    void MovePlayer2()
+    {
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (Input.GetKey(KeyCode.UpArrow))
+            vertical = 1f;
+
+        if (Input.GetKey(KeyCode.DownArrow))
+            vertical = -1f;
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+            horizontal = -1f;
+
+        if (Input.GetKey(KeyCode.RightArrow))
+            horizontal = 1f;
+
+        Vector3 movement = new Vector3(horizontal, vertical, 0f);
+
+        player2.position += movement.normalized * moveSpeed * Time.deltaTime;
+    }
+}
